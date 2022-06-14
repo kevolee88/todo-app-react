@@ -1,0 +1,24 @@
+li {
+  margin-bottom: 1em;
+}
+li.completed .checkbox label {
+  text-decoration: line-through;
+}
+.checkbox {
+  width: 100%;
+  border-radius: 10px;
+  background: #272829;
+}
+.checkbox label {
+  padding: 1.3em;
+  padding-left: 2.5em !important;
+  color: #fff !important;
+  font-size: 16px !important;
+}
+
+.checkbox label::before {
+  display: none !important;
+}
+.checkbox label::after {
+  display: none !important;
+}
