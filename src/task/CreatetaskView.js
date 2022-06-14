@@ -24,7 +24,7 @@ class CreatetaskView extends Component {
   }
 
   handleNewTask() {
-    this.props.addTask(this.state.value)
+    if(this.state.value.length) this.props.addTask(this.state.value)
     this.setState({
       value: ''
     })
