@@ -2,35 +2,39 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { List, Header } from 'semantic-ui-react'
 import Task from './Task'
-import { toggleTask } from '../../actions'
+import { toggleTask, removeTask } from '../../actions'
 import './AllTasks.css'
 
-const AllTasks = ({tasks, toggleTask}) => {
+const AllTasks = ({ tasks, toggleTask, removeTask }) => {
 
   const handleCheckboxCheck = (e) => {
-    const id = e.currentTarget.children[0].name
+    const id = e.target.htmlFor
     toggleTask(id)
   }
-  const taskList = tasks.map((e,i) => {
-    return (
-      <li key={i} className={e.complete ? 'completed' : ''}><Task handleCheckboxCheck={handleCheckboxCheck} id={e.id} taskValue={e.value} /></li>
-    )
-  })
+
+  const handleTaskRemoval = (e) => {
+    const id = e.target.name
+    removeTask(id)
+  }
+
+  const renderTaskList = () => {
+    return tasks.map((e,i) => {
+      return (
+        <li key={i} className={e.complete ? 'completed' : ''}>
+          <Task handleCheckboxCheck={handleCheckboxCheck} handleTaskRemoval={handleTaskRemoval} id={e.id} taskValue={e.value} />
+        </li>
+      )
+    })
+  }
 
   return (
     <>
       <h2>All Tasks</h2>
       <List>
-        {taskList}
+        {renderTaskList()}
       </List>
     </>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tasks: state.tasks
-  }
-}
-
-export default connect(mapStateToProps, { toggleTask })(AllTasks)
+export default connect(null, { toggleTask, removeTask })(AllTasks)

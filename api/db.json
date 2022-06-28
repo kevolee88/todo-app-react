@@ -1,3 +1,9 @@
 {
-  "todo": []
+  "todos": [
+    {
+      "id": "beaa07c5-43f4-4c07-95ae-62b2903f7c7b",
+      "value": "Sample Task",
+      "complete": false
+    }
+  ]
 }

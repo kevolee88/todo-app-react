@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Segment, Menu } from 'semantic-ui-react'
-import { activeNav } from '../actions'
+import { activeNav, toggleEditMode } from '../actions'
 
 class Nav extends Component {
-  constructor(props) {
-    super(props)
 
-    this.handleItemClick = this.handleItemClick.bind(this);
-  }
-
-  handleItemClick(e, { name }) {
+  handleItemClick = (e, { name }) => {
     this.props.activeNav(name)
   }
 
-
+  handleEditMode = () => {
+    this.props.toggleEditMode()
+  }
 
   render() {
     return (
@@ -39,6 +36,13 @@ class Nav extends Component {
             active={this.props.visibilityFilter === 'SHOW_COMPLETE'}
             onClick={this.handleItemClick}
           />
+          <Menu.Menu position='right'>
+            <Menu.Item
+              content={this.props.editMode ? 'Exit Edit' : 'Edit'}
+              name='EDIT_MODE'
+              onClick={this.handleEditMode}
+            />
+          </Menu.Menu>
         </Menu>
       </Segment>
       </>
@@ -48,9 +52,9 @@ class Nav extends Component {
 
 const setStateToProps = (state) => {
   return {
-    tasks: state.tasks,
-    visibilityFilter: state.visibilityFilter
+    visibilityFilter: state.visibilityFilter,
+    editMode: state.editMode
   }
 }
 
-export default connect(setStateToProps, { activeNav })(Nav)
+export default connect(setStateToProps, { activeNav, toggleEditMode })(Nav)

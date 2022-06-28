@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Input, Button } from 'semantic-ui-react'
 import AllTasks from './components/AllTasks'
-import CompletedTasks from './CompletedTasks'
+import CompletedTasksView from './CompletedTasksView'
 import './CreatetaskView.css'
-import { addTask } from '../actions'
+import { addTask, fetchTasks } from '../actions'
 
 class CreatetaskView extends Component {
   constructor(props) {
@@ -15,6 +15,10 @@ class CreatetaskView extends Component {
 
     this.updateInputValue = this.updateInputValue.bind(this);
     this.handleNewTask = this.handleNewTask.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchTasks()
   }
 
   updateInputValue(e) {
@@ -39,7 +43,6 @@ class CreatetaskView extends Component {
         <Input onChange={evt => this.updateInputValue(evt)} placeholder="What do you want to do?" value={this.state.value} />
         <Button onClick={() => this.handleNewTask()} color="teal" fluid={true} content="Add Task" />
         {allTasks.length > 0 && <AllTasks tasks={allTasks} />}
-        {this.props.visibilityFilter === 'SHOW_COMPLETE' && <CompletedTasks tasks={allTasks} />}
       </div>
       </>
     )
@@ -48,9 +51,9 @@ class CreatetaskView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    tasks: state.tasks,
+    tasks: Object.values(state.tasks),
     visibilityFilter: state.visibilityFilter
   }
 }
 
-export default connect(mapStateToProps, { addTask })(CreatetaskView)
+export default connect(mapStateToProps, { addTask, fetchTasks })(CreatetaskView)

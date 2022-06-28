@@ -1,27 +1,16 @@
 import { combineReducers } from 'redux'
-import { v4 as uuidv4 } from 'uuid'
+import _ from 'lodash'
 
-const tasksReducer = (state = [], action) => {
+const tasksReducer = (state = {}, action) => {
   switch(action.type) {
     case 'ADD_TASK':
-      return [
-        ...state,
-        {
-          id: uuidv4(),
-          value: action.payload,
-          complete: false
-        }
-      ]
-    case 'TOGGLE_TASKS':
-      return state.map((task) => {
-            if (action.payload !== task.id) {
-              return task
-            }
-            return {
-              ...task,
-              complete: !task.complete
-            }
-          })
+      return {...state, [action.payload.id]: action.payload}
+    case 'TOGGLE_TASK':
+      return {...state, [action.payload.id]: action.payload}
+    case 'FETCH_TASKS':
+      return { ...state, ..._.mapKeys(action.payload, 'id')}
+    case 'REMOVE_TASK':
+      return _.omit(state, action.payload)
     default:
       return state
   }
@@ -36,7 +25,17 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 }
 
+const editModeReducer = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLE_EDIT_MODE':
+      return !state
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   tasks: tasksReducer,
-  visibilityFilter
+  visibilityFilter,
+  editMode: editModeReducer
 })
