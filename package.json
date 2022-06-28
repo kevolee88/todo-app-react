@@ -1,0 +1,19 @@
+{
+  "name": "todo-app-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "(cd client && npm run start) & (cd api && npm run start)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevolee88/todo-app-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevolee88/todo-app-react/issues"
+  },
+  "homepage": "https://github.com/kevolee88/todo-app-react#readme"
+}
